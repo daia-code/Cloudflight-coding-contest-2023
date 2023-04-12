@@ -1,1 +1,87 @@
 
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+public class Level2 {
+    public static void main(String[] args) {
+        String inputFile = "C:\\Users\\daian\\IdeaProjects\\cloudflight\\src\\level2_5.in";
+        String outputFile = "C:\\Users\\daian\\IdeaProjects\\cloudflight\\src\\out.txt";
+
+        int numChars2=0, numLines=0;
+        char result;
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+            // Read the number of lines and characters per line from the first line
+            String[] firstLine = reader.readLine().split(" ");
+            numLines = Integer.parseInt(firstLine[0]);
+            int numChars = Integer.parseInt(firstLine[1]);
+            numChars2 = numChars;
+            // Process each line
+            for (int i = 0; i < numLines; i++) {
+                // Read the next line from the input file
+                String inputLine = reader.readLine();
+                // Compare the characters two at a time and write the output to the output file
+                for (int j = 0; j < numChars; j += 2) {
+                    char firstChar = inputLine.charAt(j);
+                    char secondChar = inputLine.charAt(j + 1);
+                    result = compareCharacters(firstChar, secondChar);
+                    writer.write(result);
+                }
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String input2 = "C:\\Users\\daian\\IdeaProjects\\cloudflight\\src\\out.txt";
+        String outputFile2 = "C:\\Users\\daian\\IdeaProjects\\cloudflight\\src\\out2.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(input2));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile2))) {
+            // Read the number of lines and characters per line from the first line
+//            String[] firstLine = reader.readLine().split("");
+
+//            int numChars = nrChars2/ 2;
+            // Process each line
+            for (int i = 0; i <numLines; i++) {
+                String inputLine = reader.readLine();
+                if (inputLine == null) {
+                    break; // exit the loop if there are no more lines to read
+                }
+                // Compare the characters two at a time and write the output to the output file
+                for (int j = 0; j <(numChars2/2)-1; j += 2) {
+                    char firstChar = inputLine.charAt(j);
+                    char secondChar = inputLine.charAt(j + 1);
+                    result = compareCharacters(firstChar, secondChar);
+                    writer.write(result);
+                }
+                writer.newLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    // Compares two characters and returns the resulting character
+    private static char compareCharacters(char firstChar, char secondChar) {
+        if (firstChar == secondChar) {
+            return firstChar;
+        } else if (firstChar == 'R' && secondChar == 'S' || firstChar == 'S' && secondChar == 'R') {
+            return 'R';
+        } else if (firstChar == 'P' && secondChar == 'R' || firstChar == 'R' && secondChar == 'P') {
+            return 'P';
+        } else if (firstChar == 'S' && secondChar == 'P' || firstChar == 'P' && secondChar == 'S') {
+            return 'S';
+        } else {
+            return ' ';
+        }
+    }
+}
